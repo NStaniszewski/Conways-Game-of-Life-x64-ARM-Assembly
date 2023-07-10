@@ -1,25 +1,17 @@
-/**
- * @file main.c
- * Simple program to test and demonstrate the game of life function.
- */
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
 
-
 void display(int *cells, int width, int height);
 void life(int *cells, int width, int height);
 int load(int *cells, int width, int height, const char *option);
-
 
 int main(int argc, char **argv)
 {
 	char ch;
 	int generation = 0;
 	char *option = "random";
-	
 	srand((unsigned int)time(NULL));
     
 	if(argc < 3) 
@@ -47,20 +39,14 @@ int main(int argc, char **argv)
 		return 1;
 	}
 	
-	/*
-	 * Allocate memory for the life cells
-	 */
 	int *cells = (int *)calloc(width * height, sizeof(int));
 	if(!load(cells, width, height, option)) {
 		return 1;
 	}
 	
-	// Display initial generation
     printf("Generation: %d\n", generation);
 	display(cells, width, height);
-	
 	ch = getchar();
-	
 	while(ch != 'x' && ch != 27 && ch != 'q') {
 		generation++;
 		life(cells, width, height);
@@ -77,7 +63,6 @@ int main(int argc, char **argv)
 
 int load(int *cells, int width, int height, const char *option) {
 	int i;
-	
 	if(strcmp(option, "blinker") == 0) {
 		if(height < 3) 
 		{
@@ -152,19 +137,16 @@ int load(int *cells, int width, int height, const char *option) {
 		cells[width *15] =  0x00410000;
 		cells[width *16] =  0x00000000;
 	} else {
-		// Random data
 		for(i=0; i<width * height; i++) {
 			cells[i] = (rand() & 0xffff) << 16 | (rand() & 0xffff);
 		}
 	}
-	
 	return 1;
 }
 
 void display(int *cells, int width, int height)
 {
 	int i, r, c;
-	
 	for(r=0; r<height; r++) {
 		for(c=0; c<width; cells++, c++) 
 		{
@@ -179,8 +161,6 @@ void display(int *cells, int width, int height)
 				}
 			}
 		}
-		
 		printf("\n");
 	}
 }
-
